@@ -1,0 +1,181 @@
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+::-moz-selection { /* Code for Firefox */
+  color: #FFFFFF;tion is not supported in Intern
+  background: #006cfa;
+}
+
+::selection {
+  color: #FFFFFF;
+  background: #006cfa;
+}
+#content{
+  padding-top: 20px;
+}
+#map{
+  width:100%;
+  height:94.5vh;
+}
+.tool-panel{
+  position: absolute;
+  top:70px;
+  width: 30em;
+  height: auto;
+  overflow: auto;
+  background-color: #343a40 ;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  z-index: 1000;
+  right:2em;
+  opacity:1;
+  font-size: 14px;
+  color: #FFFFFF;
+  padding: 20px;
+}
+
+.tool-panel > h3 {
+  padding: 10px;
+}
+
+
+.slider-panel{
+  position: absolute;
+  display: inline-block;
+  bottom:20px;
+  width: 60%;
+  height: auto;
+  background: rgba(52, 58, 64, 0.8);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  z-index: 1000;
+  left: 20%;
+  padding: 10px 40px 10px 40px;
+}
+
+.irs--round .irs-min, .irs--round .irs-max {
+    color: #333;
+    font-size: 14px;
+    line-height: 1;
+    top: 0;
+    padding: 3px 5px;
+    background-color: rgba(255, 255, 255,1);
+    border-radius: 4px;
+}
+.checkboxcontainer input {
+  display: none;
+}
+
+.checkboxcontainer {
+  display: inline-block;
+  padding-left: 30px;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkboxcontainer .checkmark {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: white;
+  position: absolute;
+  left: 0;
+  top: 0;
+  border: 1px solid black;
+}
+
+.checkboxcontainer input:checked + .checkmark {
+  background-color: #006cfa;
+  border: 1px solid #006cfa;
+}
+
+.checkboxcontainer input:indeterminate + .checkmark {
+  background-color: #006cfa;
+  border: 1px solid #006cfa;
+}
+
+.checkboxcontainer input:checked + .checkmark:after {
+  content: "";
+  position: absolute;
+  height: 6px;
+  width: 11px;
+  border-left: 2px solid white;
+  border-bottom: 2px solid white;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.checkboxcontainer input:checked:disabled + .checkmark {
+    border: 1px solid grey;
+    background-color: grey;
+}
+
+.checkboxcontainer input:disabled + .checkmark {
+    border: 1px solid grey;
+}
+
+.checkboxcontainer input:indeterminate + .checkmark:after {
+  content: "";
+  position: absolute;
+  height: 0px;
+  width: 11px;
+  border-left: 2px solid white;
+  border-bottom: 2px solid white;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(180deg);
+}
+
+.carousel-item {
+  height: 60vh;
+  min-height: 350px;
+  background: no-repeat center center scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+.carousel-caption{
+  background-color:rgb(192,192,192);
+  opacity:0.7;
+  color: #343a40;
+}
+.carousel-caption > h2, .carousel-caption > p{
+  opacity:0.9;
+  color: black;
+}
+.zoom:hover {
+  transform: scale(1.1); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+.navbar-dark .navbar-nav .nav-link {
+    font-weight: 550;
+    color: #FFFFFF;
+    border-right: 2px solid grey;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: lightblue;
+}
+.btn-lightblue{
+  background-color: lightblue;
+  font-weight: 550;
+}
+.btn-blue{
+  background-color: #006cfa;
+  font-weight: 550;
+  color: #FFFFFF;
+}
+.btn-blue:hover{
+  color: #FFFFFF;
+}
+
+.center{
+  text-align: center;
+}
+.left{
+  text-align: left;
+}
+.right{
+  text-align: right;
+}
