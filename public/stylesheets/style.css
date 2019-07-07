@@ -179,3 +179,13 @@ body {
 .right{
   text-align: right;
 }
+.ui-widget-header {
+    border: 1px solid #006cfa;
+    background: #006cfa;
+    color: #ffffff;
+    font-weight: bold;
+}
+.footer-copyright{
+  margin-top:50px;
+  background-color: #D6EAF8;
+}

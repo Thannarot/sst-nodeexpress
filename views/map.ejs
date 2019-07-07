@@ -1,32 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang = "en">
   <% include ./partials/head %>
-  <body>
-    <% include ./partials/header %>
-      <!-- <div class="tool-panel">
-        <div class="container">
-          <h3>Sea surface temperature</h3>
-          <div class="form-group">
-            <label for="email">Select date:</label>
-            <input type="date" id="datepicker" class="form-control">
-          </div>
-          <div class="form-group">
-            <label class="checkboxcontainer"> Sea Surface Temperature
-              <input type="checkbox">
-              <span class="checkmark"></span>
-            </label>
-          </div>
-          <div class="form-group">
-            <label class="checkboxcontainer"> Temperature Averages
-              <input type="checkbox">
-              <span class="checkmark"></span>
-            </label>
-          </div>
-          <div class="left">
-            <button type="submit" class="btn btn-blue zoom" style="width:50%;">DOWNLOAD</button>
-          </div>
-        </div>
+   <body>
+     <% include ./partials/header %>
 
+      <!-- <div class="container">
+        <h3>Sea surface temperature</h3>
+        <div class="form-group">
+          <label for="email">Select date:</label>
+          <input type="date" id="datepicker" class="form-control">
+        </div>
+        <div class="form-group">
+          <label class="checkboxcontainer"> Sea Surface Temperature
+            <input type="checkbox">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="form-group">
+          <label class="checkboxcontainer"> Temperature Averages
+            <input type="checkbox">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="left">
+          <button type="submit" class="btn btn-blue zoom" style="width:50%;">DOWNLOAD</button>
+        </div>
       </div> -->
 
       <!-- <div id="map">
@@ -35,23 +33,20 @@
         <input type="text" class="js-range-slider" id="month_range" name="month_range" />
       </div> -->
       <div id="content" class="container">
-        <h3>Khungkrabaen Bay</h3>
+      <h3>Sea surface temperature map</h3>
         <div class="row">
           <div class="col-md-9">
-            <img src="/images/SST_Map/201701_SST-map.png" alt="" style="width:100%;">
+            <img id="map_img" src="" alt="" style="width:100%;" />
           </div>
           <div class="col-md-3" style="font-size:16px;">
-              <div class="container">
-                <h3>Sea surface temperature</h3>
                 <div class="form-group">
-                  <label for="email">Select date:</label>
-                  <div class='input-group date' id='datetimepicker'>
-                    <input type='text' class="form-control" />
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
+                  <label for="datepicker-input"><b>Select date:</b></label>
+                      <input type = "text" id = "datepicker-input" class="form-control">
                 </div>
-
+                <div class="form-group">
+                  <div class="left">
+                    <button id="btn_download" type="submit" class="btn btn-blue zoom">Download Map</button>
+                  </div>
                 </div>
                 <!-- <div class="form-group">
                   <label class="checkboxcontainer"> Sea Surface Temperature
@@ -65,72 +60,104 @@
                     <span class="checkmark"></span>
                   </label>
                 </div> -->
-                <div class="left">
-                  <button type="submit" class="btn btn-blue zoom" style="width:50%;">DOWNLOAD</button>
-                </div>
-              </div>
+
 
           </div>
         </div>
-
+        <% include ./partials/footer %>
       </div>
+      <script>
+         $(function() {
+           var img_src;
 
-    <script type="text/javascript">
-    $(function () {
+           $("#datepicker-input").datepicker({
+             changeMonth: true,
+             changeYear: true,
+             dateFormat: "M-yy",
+             showButtonPanel: true,
+             currentText: "This Month",
+             minDate: new Date(2017, 1 - 1, 1),
+             maxDate: new Date(2019, 12 - 1, 1),
+             defaultDate: new Date(2017, 1-1),
+             onChangeMonthYear: function (year, month, inst) {
+                 $(this).val($.datepicker.formatDate('M-yy', new Date(year, month - 1, 1)));
+                 img_src = '/images/SST_Map/'+ $.datepicker.formatDate('yymm', new Date(year, month - 1, 1)) + '_map.png';
 
-      $("#datepicker").datetimepicker( {
-            format: "mm-yyyy",
-            viewMode: "months",
-            minViewMode: "months"
+                 $("#map_img")
+                  .error(function() {
+                    $("#map_img").attr( "src", '/images/SST_Map/noimage.png' );
+                    $("#btn_download").attr('disabled' ,true);
+                    $("#btn_download").removeClass('zoom');
+                  })
+                  .attr( "src", img_src );
+                  $("#btn_download").toggleClass('zoom');
+                  $("#btn_download").attr('disabled' ,false);
+
+
+             },
+             onClose: function(dateText, inst) {
+                 var month = $(".ui-datepicker-month :selected").val();
+                 var year = $(".ui-datepicker-year :selected").val();
+                 $(this).val($.datepicker.formatDate('M-yy', new Date(year, month, 1)));
+             }
+            }).focus(function () {
+               $(".ui-datepicker-calendar").hide();
+            }).after(
+               $("<a href='javascript: void(0);'><i>clear</i></a>").click(function() {
+                   $(this).prev().val('');
+               })
+            );
+            $('#datepicker-input').datepicker().datepicker("setDate", new Date(2017,1-1));
+
+            $('#btn_download').click(function(e) {
+                //e.preventDefault();  //stop the browser from following
+                // window.location.href = img_src;
+                setTimeout("window.location.assign('" + img_src + "');", 1000);
+            });
         });
-
-  });
-
-    // var lang = "en-US";
-    // var year_start = 2018;
-    // var year_end = 2020;
-    //
-    // function dateToTS (date) {
-    //     return date.valueOf();
-    // }
-    //
-    // function tsToDate (ts) {
-    //     var d = new Date(ts);
-    //
-    //     return d.toLocaleDateString(lang, {
-    //         year: 'numeric',
-    //         month: 'long',
-    //         day: 'numeric'
-    //     });
-    // }
-    //
-    // $(".js-range-slider").ionRangeSlider({
-    //     skin: "round",
-    //     type: "double",
-    //     grid: true,
-    //     min: dateToTS(new Date(year_start, 1, 1)),
-    //     max: dateToTS(new Date(year_end, 11, 1)),
-    //     from: dateToTS(new Date(year_end, 1, 1)),
-    //     to: dateToTS(new Date(year_end, 5, 1)),
-    //     prettify: tsToDate
-    // });
-    //
-    //
-    //  var map = L.map('map').setView([14.09, 100.09], 13);
-    //  L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-    //    maxZoom: 18,
-    //    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
-    //      '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-    //      'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    //    id: 'mapbox.streets'
-    //  }).addTo(map);
-    //  var wmsLayer = L.tileLayer.wms('http://localhost:8080/geoserver/ows?', {
-    //       layers: 'sst:water_extract.onlywater',
-    //       format: 'image/png',
-    //       transparent: true
-    //   }).addTo(map);
-    </script>
-
-  </body>
-  <% include ./partials/footer %>
+        // var lang = "en-US";
+        // var year_start = 2018;
+        // var year_end = 2020;
+        //
+        // function dateToTS (date) {
+        //     return date.valueOf();
+        // }
+        //
+        // function tsToDate (ts) {
+        //     var d = new Date(ts);
+        //
+        //     return d.toLocaleDateString(lang, {
+        //         year: 'numeric',
+        //         month: 'long',
+        //         day: 'numeric'
+        //     });
+        // }
+        //
+        // $(".js-range-slider").ionRangeSlider({
+        //     skin: "round",
+        //     type: "double",
+        //     grid: true,
+        //     min: dateToTS(new Date(year_start, 1, 1)),
+        //     max: dateToTS(new Date(year_end, 11, 1)),
+        //     from: dateToTS(new Date(year_end, 1, 1)),
+        //     to: dateToTS(new Date(year_end, 5, 1)),
+        //     prettify: tsToDate
+        // });
+        //
+        //
+        //  var map = L.map('map').setView([14.09, 100.09], 13);
+        //  L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+        //    maxZoom: 18,
+        //    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+        //      '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+        //      'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        //    id: 'mapbox.streets'
+        //  }).addTo(map);
+        //  var wmsLayer = L.tileLayer.wms('http://localhost:8080/geoserver/ows?', {
+        //       layers: 'sst:water_extract.onlywater',
+        //       format: 'image/png',
+        //       transparent: true
+        //   }).addTo(map);
+      </script>
+   </body>
 </html>
